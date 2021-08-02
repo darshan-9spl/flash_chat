@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flash_chat/screens/chat_screen.dart';
+import 'package:flash_chat/widgets/show_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat/widgets/rounded_button.dart';
 
@@ -11,6 +13,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _auth = FirebaseAuth.instance;
+  String? email;
+  String? password;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
               style: TextStyle(color: Colors.black),
               onChanged: (value) {
                 //Do something with the user input.
+                email = value;
               },
               decoration:
                   kTextFieldDecoration.copyWith(hintText: 'Enter your Email'),
@@ -50,6 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
               obscureText: true,
               onChanged: (value) {
                 //Do something with the user input.
+                password = value;
               },
               style: TextStyle(color: Colors.black),
               decoration: kTextFieldDecoration.copyWith(
@@ -60,8 +67,19 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             RoundedButton(
               title: 'Login',
-              onPress: () {
-                Navigator.pushNamed(context, ChatScreen.id);
+              onPress: () async {
+                try {
+                  final newUser = await _auth.signInWithEmailAndPassword(
+                      email: email!, password: password!);
+                  if (newUser.user != null) {
+                    Navigator.pushNamed(context, ChatScreen.id);
+                  } else {
+                    showAlertDialog(context, "Email or Password are invalid!");
+                  }
+                } catch (e) {
+                  print("Error =======$e");
+                  showAlertDialog(context, "Email or Password are invalid!");
+                }
               },
               color: Colors.lightBlueAccent,
             ),
@@ -70,4 +88,27 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
+  // void showAlertDialog(BuildContext context, String message) {
+  //   // set up the AlertDialog
+  //   showDialog<String>(
+  //     context: context,
+  //     builder: (BuildContext context) => AlertDialog(
+  //       title: const Text(
+  //         'Error',
+  //         style: TextStyle(color: Colors.black),
+  //       ),
+  //       content: Text(
+  //         message,
+  //         style: TextStyle(color: Colors.black),
+  //       ),
+  //       actions: <Widget>[
+  //         TextButton(
+  //           onPressed: () => Navigator.pop(context, 'OK'),
+  //           child: const Text('OK'),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }

@@ -2,8 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flash_chat/constants.dart';
 
-import 'package:flutter/foundation.dart' show kIsWeb;
-
 class ChatScreen extends StatefulWidget {
   static String id = 'chat_screen';
   @override
@@ -12,12 +10,13 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final _auth = FirebaseAuth.instance;
-  late User logedInUser;
-  void getCurrentUser() async {
+  late User loggedInUser;
+  void getCurrentUser() {
     try {
-      final user = await _auth.currentUser;
+      final user = _auth.currentUser;
       if (user != null) {
-        logedInUser = user;
+        loggedInUser = user;
+        print(loggedInUser.email);
       }
     } on Exception catch (e) {
       print(e);
@@ -39,8 +38,11 @@ class _ChatScreenState extends State<ChatScreen> {
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.close),
-              onPressed: () {
+              onPressed: () async {
                 //Implement logout functionality
+                await _auth.signOut();
+                Navigator.pop(context);
+                // print(_auth.currentUser);
               }),
         ],
         title: Text('⚡️Chat'),
@@ -67,7 +69,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   TextButton(
                     onPressed: () {
                       //Implement send functionality.
-                      print(logedInUser.email);
+                      print(loggedInUser.email);
                     },
                     child: Text(
                       'Send',
