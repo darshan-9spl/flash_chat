@@ -14,22 +14,12 @@ class _ChatScreenState extends State<ChatScreen> {
   final _firestore = FirebaseFirestore.instance;
   User? loggedInUser;
   String? messageTxt;
-  void getCurrentUser() {
-    try {
-      final user = _auth.currentUser;
-      if (user != null) {
-        loggedInUser = user;
-        print(loggedInUser!.email);
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
 
   @override
   void initState() {
     super.initState();
     getCurrentUser();
+    print(loggedInUser!.email);
   }
 
   @override
@@ -71,7 +61,10 @@ class _ChatScreenState extends State<ChatScreen> {
                   TextButton(
                     onPressed: () {
                       //Implement send functionality.
-                      print(loggedInUser!.email);
+                      _firestore.collection('messages').add({
+                        'message': messageTxt,
+                        'sender': loggedInUser!.email
+                      });
                     },
                     child: Text(
                       'Send',
@@ -86,4 +79,18 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
     );
   }
+
+  void getCurrentUser() {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        loggedInUser = user;
+        print(loggedInUser!.email);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void getMessage() {}
 }

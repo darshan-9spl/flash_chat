@@ -12,12 +12,12 @@ class FlashChat extends StatelessWidget {
   Widget build(BuildContext context) {
     Firebase.initializeApp();
     return MaterialApp(
-      theme: ThemeData().copyWith(
+      /*theme: ThemeData().copyWith(
         textTheme: TextTheme(
           bodyText1: TextStyle(color: Colors.black54),
           bodyText2: TextStyle(color: Colors.black54),
         ),
-      ),
+      ),*/
       initialRoute: WelcomeScreen.id,
       routes: {
         WelcomeScreen.id: (context) => WelcomeScreen(),
