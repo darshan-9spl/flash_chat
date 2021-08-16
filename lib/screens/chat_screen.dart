@@ -32,8 +32,10 @@ class _ChatScreenState extends State<ChatScreen> {
               icon: Icon(Icons.close),
               onPressed: () async {
                 //Implement logout functionality
-                await _auth.signOut();
-                Navigator.pop(context);
+                // await _auth.signOut();
+                // Navigator.pop(context);
+                messagesStreams();
+                // getMessage();
                 // print(_auth.currentUser);
               }),
         ],
@@ -92,5 +94,22 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  void getMessage() {}
+  void getMessage() async {
+    final messages = await _firestore.collection('messages').get();
+    try {
+      for (var message in messages.docs) {
+        print("message=====" + message.data().toString());
+      }
+    } catch (e) {
+      print("Error====$e");
+    }
+  }
+
+  void messagesStreams() async {
+    await for (var snapshot in _firestore.collection('messages').snapshots()) {
+      for (var message in snapshot.docs) {
+        print("message=====" + message.data().toString());
+      }
+    }
+  }
 }
