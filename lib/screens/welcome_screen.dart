@@ -1,4 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flash_chat/screens/chat_screen.dart';
 import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flash_chat/widgets/rounded_button.dart';
@@ -11,6 +14,15 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+  final _auth = FirebaseAuth.instance;
+  User? loggedInUser;
+
+  @override
+  void initState() {
+    Firebase.initializeApp(name: "flash_chat");
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +85,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             RoundedButton(
               title: 'Login',
               onPress: () {
-                Navigator.pushNamed(context, LoginScreen.id);
+                _loginButtonPressed();
               },
               color: Colors.lightBlueAccent,
             ),
@@ -88,6 +100,28 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         ),
       ),
     );
+  }
+
+  void _loginButtonPressed() {
+    // getCurrentUser();
+    if (_auth.currentUser != null) {
+      print("User Already logged in");
+      Navigator.pushNamed(context, ChatScreen.id);
+    } else {
+      Navigator.pushNamed(context, LoginScreen.id);
+    }
+  }
+
+  void getCurrentUser() {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        loggedInUser = user;
+        print(loggedInUser!.email);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }
 
