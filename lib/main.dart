@@ -18,9 +18,6 @@ initApp() async {
 class FlashChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // Firebase.initializeApp(name: "default");
-    // initApp();
-
     return MaterialApp(
       /*theme: ThemeData().copyWith(
         textTheme: TextTheme(
@@ -28,6 +25,7 @@ class FlashChat extends StatelessWidget {
           bodyText2: TextStyle(color: Colors.black54),
         ),
       ),*/
+      debugShowCheckedModeBanner: false,
       initialRoute: WelcomeScreen.id,
       routes: {
         WelcomeScreen.id: (context) => WelcomeScreen(),
@@ -36,9 +34,5 @@ class FlashChat extends StatelessWidget {
         ChatScreen.id: (context) => ChatScreen(),
       },
     );
-  }
-
-  initApp() async {
-    await Firebase.initializeApp();
   }
 }
