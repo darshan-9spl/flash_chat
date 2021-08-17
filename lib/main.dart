@@ -5,12 +5,22 @@ import 'package:flash_chat/screens/login_screen.dart';
 import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flash_chat/screens/chat_screen.dart';
 
-void main() => runApp(FlashChat());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initApp();
+  runApp(FlashChat());
+}
+
+initApp() async {
+  await Firebase.initializeApp();
+}
 
 class FlashChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Firebase.initializeApp();
+    // Firebase.initializeApp(name: "default");
+    // initApp();
+
     return MaterialApp(
       /*theme: ThemeData().copyWith(
         textTheme: TextTheme(
@@ -26,5 +36,9 @@ class FlashChat extends StatelessWidget {
         ChatScreen.id: (context) => ChatScreen(),
       },
     );
+  }
+
+  initApp() async {
+    await Firebase.initializeApp();
   }
 }

@@ -18,12 +18,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   User? loggedInUser;
 
   @override
-  void initState() {
-    Firebase.initializeApp(name: "flash_chat");
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,

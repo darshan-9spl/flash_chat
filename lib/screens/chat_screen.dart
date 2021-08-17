@@ -14,7 +14,8 @@ class _ChatScreenState extends State<ChatScreen> {
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
   User? loggedInUser;
-  String? messageTxt;
+
+  TextEditingController _editMsg = TextEditingController();
 
   @override
   void initState() {
@@ -51,12 +52,15 @@ class _ChatScreenState extends State<ChatScreen> {
           backgroundColor: Colors.lightBlueAccent,
         ),
         body: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Center(
-                child: StreamBuilder<QuerySnapshot>(
+          child: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                StreamBuilder<QuerySnapshot>(
                   stream: _firestore.collection('messages').snapshots(),
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (!snapshot.hasData) {
@@ -73,49 +77,52 @@ class _ChatScreenState extends State<ChatScreen> {
                         final messageTxt = msg['text'].toString();
                         final messageSender = msg['sender'].toString();
 
-                        final messageWidget =
-                            Text('$messageTxt from $messageSender');
+                        final messageWidget = Text(
+                          '$messageTxt from $messageSender',
+                          style: TextStyle(fontSize: 20),
+                        );
                         messageWidgets.add(messageWidget);
                       }
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: messageWidgets,
+                      return Expanded(
+                        child: ListView(
+                          children: messageWidgets,
+                        ),
                       );
                     }
                   },
                 ),
-              ),
-              Container(
-                decoration: kMessageContainerDecoration,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Expanded(
-                      child: TextField(
-                        onChanged: (value) {
-                          messageTxt = value;
+                Container(
+                  decoration: kMessageContainerDecoration,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                        child: TextField(
+                          controller: _editMsg,
+                          decoration: kMessageTextFieldDecoration,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          //Implement send functionality.
+                          if (_editMsg.text.isNotEmpty) {
+                            _firestore.collection('messages').add({
+                              'text': _editMsg.text,
+                              'sender': loggedInUser!.email
+                            });
+                            _editMsg.clear();
+                          } else {}
                         },
-                        decoration: kMessageTextFieldDecoration,
+                        child: Text(
+                          'Send',
+                          style: kSendButtonTextStyle,
+                        ),
                       ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        //Implement send functionality.
-                        _firestore.collection('messages').add({
-                          'message': messageTxt,
-                          'sender': loggedInUser!.email
-                        });
-                      },
-                      child: Text(
-                        'Send',
-                        style: kSendButtonTextStyle,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
