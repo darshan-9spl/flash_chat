@@ -71,20 +71,24 @@ class _ChatScreenState extends State<ChatScreen> {
                       );
                     } else {
                       final messages = snapshot.data!.docs;
-                      List<Text> messageWidgets = [];
+                      List<MessageBubble> messageWidgets = [];
                       for (var message in messages) {
                         Map msg = message.data() as Map<String, dynamic>;
                         final messageTxt = msg['text'].toString();
                         final messageSender = msg['sender'].toString();
 
-                        final messageWidget = Text(
+                        /*final messageWidget = Text(
                           '$messageTxt from $messageSender',
-                          style: TextStyle(fontSize: 20),
-                        );
+                          style: TextStyle(fontSize: 50),
+                        );*/
+                        final messageWidget = MessageBubble(
+                            text: messageTxt, sender: messageSender);
                         messageWidgets.add(messageWidget);
                       }
                       return Expanded(
                         child: ListView(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 10.0, vertical: 20.0),
                           children: messageWidgets,
                         ),
                       );
@@ -158,5 +162,22 @@ class _ChatScreenState extends State<ChatScreen> {
         print("message=====${message.data}");
       }
     }
+  }
+}
+
+class MessageBubble extends StatelessWidget {
+  final String text;
+  final String sender;
+  MessageBubble({required this.text, required this.sender});
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.lightBlueAccent,
+      child: Text(
+        '$text from $sender',
+        style: TextStyle(fontSize: 50),
+      ),
+    );
   }
 }
