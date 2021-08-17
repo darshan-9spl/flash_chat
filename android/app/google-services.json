@@ -1,70 +1,41 @@
 {
   "project_info": {
-    "project_number": "941697607489",
-    "project_id": "signin-f319d",
-    "storage_bucket": "signin-f319d.appspot.com"
+    "project_number": "462279430279",
+    "project_id": "flash-chat-2a50f",
+    "storage_bucket": "flash-chat-2a50f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:941697607489:android:2b1d5a7609aca7bffde3c0",
+        "mobilesdk_app_id": "1:462279430279:android:0887c106aadd47ffb7e822",
         "android_client_info": {
-          "package_name": "com.example.flash_chat"
+          "package_name": "com.example.flash_chat_d"
         }
       },
       "oauth_client": [
         {
-          "client_id": "941697607489-smpp3u9497vc2rj792qd2vjt5vqtd2dh.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBCr8hT2nTJ2Hq3pdgrVzLh3nYiRrKGsxk"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "941697607489-smpp3u9497vc2rj792qd2vjt5vqtd2dh.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:941697607489:android:7da209d6de4c5e62fde3c0",
-        "android_client_info": {
-          "package_name": "com.example.google_signin"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "941697607489-gv9g0574gcnd5b2blivpuojduk57s2vv.apps.googleusercontent.com",
+          "client_id": "462279430279-7f66h5khjlltfqhnkaa6mubaaajuskve.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.google_signin",
+            "package_name": "com.example.flash_chat_d",
             "certificate_hash": "ed30d4abbf8e2617ba6cde8ff550f94864c32ca8"
           }
         },
         {
-          "client_id": "941697607489-smpp3u9497vc2rj792qd2vjt5vqtd2dh.apps.googleusercontent.com",
+          "client_id": "462279430279-nkm35qtabnmtch4pes12ua91t58lticu.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBCr8hT2nTJ2Hq3pdgrVzLh3nYiRrKGsxk"
+          "current_key": "AIzaSyDcEGDG66lXk751N95qU5jpkuuwwQ7tspk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "941697607489-smpp3u9497vc2rj792qd2vjt5vqtd2dh.apps.googleusercontent.com",
+              "client_id": "462279430279-nkm35qtabnmtch4pes12ua91t58lticu.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
