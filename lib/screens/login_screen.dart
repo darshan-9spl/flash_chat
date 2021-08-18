@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 48.0,
                 ),
                 TextField(
-                  autofocus: true,
+                  // autofocus: true,
                   keyboardType: TextInputType.emailAddress,
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.black),
